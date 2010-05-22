@@ -124,6 +124,10 @@ function jck(canvas, options){
 	// Toggle the pause status of the canvas's update loop
 	canvas.togglePause = function(){
 		this.options.autoUpdate = !this.options.autoUpdate;
+		
+		if (!this.options.autoUpdate && this.showProfiler){
+			this.updateProfiler();	
+		}
 	};
 		
 	/*	Redraw routine for the canvas.  Also acts as a wrapper for canvas.runloop.
@@ -168,7 +172,7 @@ function jck(canvas, options){
 	// Now that the update function has been defined, repeat it at the rate defined by canvas.options.framerate
 	canvas.updateHandle = setInterval(canvas.update, parseInt(1000 / canvas.options.framerate));
 	
-	/* - END Additional cnavas functions - */
+	/* - END Additional canvas functions - */
 	
 	/* - Profiler functions - 
 	
@@ -182,29 +186,33 @@ function jck(canvas, options){
 		info = "";
 			
 		for(var option in this.options)
-			info += makeProfilerLI(canvas, option, this.options[option]);
+			info += makeProfilerLI(this, option, this.options[option]);
 			
 		for(var data in this.liveData)
-			info += makeProfilerLI(canvas, data, this.liveData[data]);
+			info += makeProfilerLI(this, data, this.liveData[data]);
 		
-		$("body").append(makeProfilerUL(canvas, info));
+		$("body").append(makeProfilerUL(this, info));
 		
-		$("#" + canvas.profilerID).each(function(){
-			$(this).addClass("profilerOutput").draggable().css({"display" : "block"});
+		$("#" + this.profilerID).each(function(){
+			$(this).addClass("profilerOutput").draggable();
 		});
+		
+		this.hideProfiler();
 	}
 	
 	// Completely remove the profiler from the document
 	canvas.killProfiler = function(){
-		$("#" + canvas.profilerID).remove();
+		$("#" + this.profilerID).remove();
 	}
 	
 	canvas.showProfiler = function(){
-		$("#" + canvas.profilerID).css({"display" : "block"});
+		this.options.showProfiler = true;
+		$("#" + this.profilerID).css({"display" : "block"});
 	}
 	
 	canvas.hideProfiler = function(){
-		$("#" + canvas.profilerID).css({"display" : "none"});
+		this.options.showProfiler = false;
+		$("#" + this.profilerID).css({"display" : "none"});
 	}
 	
 	// Shows/hides the profiler, but keeps it in the document
@@ -235,27 +243,31 @@ function jck(canvas, options){
 	*/
 	canvas.addProfilerValue = function(profilerValues){ // Expecting an array
 		// Blank out the profiler and start fresh with it before we add the new values
-		canvas.killProfiler();
-		canvas.createProfiler();
+		this.killProfiler();
+		this.createProfiler();
 	
-		for (var i = 0; i < profilerValues.length; i++)
-			canvas.additionalProfilerOutputs.push(profilerValues[i]);
+		for (i = 0; i < profilerValues.length; i++)
+			this.additionalProfilerOutputs.push(profilerValues[i]);
 			
-		for (var i = 0; i < canvas.additionalProfilerOutputs.length; i++)
-			$(makeProfilerLI(canvas, canvas.additionalProfilerOutputs[i].label, canvas.additionalProfilerOutputs[i].value)).appendTo("#" + canvas.profilerID);
+		for (i = 0; i < this.additionalProfilerOutputs.length; i++)
+			$(makeProfilerLI(this, this.additionalProfilerOutputs[i].label, this.additionalProfilerOutputs[i].value)).appendTo("#" + this.profilerID);
 			
 	};
 	
 	/*	If you are calling this explicitly and are passing custom values, you must pass them as the parameters here as well.
 		Use the same format used when adding them initially, as detailed above.  */
-	canvas.updateProfiler = function(additionalValues){ // Expecting an array
-		for (var data in this.liveData)
-			$("#" + canvas.profilerID + " #" + getProfilerLIID(canvas, data, this.liveData[data]) + " .value").html(this.liveData[data]);
+		canvas.updateProfiler = function(additionalValues){ // Expecting an array
+		for (option in this.options)
+			$("#" + this.profilerID + " #" + getProfilerLIID(this, option, this.options[option]) + " .value").html(this.options[option].toString());
+		
+		for (data in this.liveData)
+			$("#" + this.profilerID + " #" + getProfilerLIID(this, data, this.liveData[data]) + " .value").html(this.liveData[data]);
 		
 		if (additionalValues != null){
-			for (var i = 0; i < additionalValues.length; i++)
-				$("#" + canvas.profilerID + " #" + getProfilerLIID(canvas, additionalValues[i].label) + " .value").html(additionalValues[i].value);
+			for (i = 0; i < additionalValues.length; i++)
+				$("#" + this.profilerID + " #" + getProfilerLIID(this, additionalValues[i].label) + " .value").html(additionalValues[i].value);
 		}
+		
 	}
 	/* - END Profiler functions - */
 	
@@ -286,10 +298,8 @@ function random(max, min){
 		return Math.random();
 	
 	if (min == null)
-		//return Math.floor(Math.random() * max);
 		return (Math.random() * max);
 		
 	difference = max - min;
-	//return min + Math.floor(Math.random() * difference);
 	return min + Math.random() * difference;
 };

@@ -105,6 +105,6 @@ function addARandomCircle(){
 		Math.floor(Math.random() * theCanvas.getWidth()), // x
 		Math.floor(Math.random() * theCanvas.getHeight()), // y
 		random(randCircSizeMin, randCircSizeMax), // radius
-		"rgb(" + random(255) + ", " + random(255) + ", " + random(255) + ")"
+		"rgb(" + parseInt(random(255)) + ", " + parseInt(random(255)) + ", " + parseInt(random(255)) + ")"
 	));
 }
