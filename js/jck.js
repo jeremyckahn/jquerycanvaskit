@@ -280,14 +280,16 @@ function now(){
 	return new Date();	
 }
 
-// Useful for getting random integer values.  Parameters are optional
+// Useful for getting random values.  Parameters are optional
 function random(max, min){
 	if (max == null && min == null)
 		return Math.random();
 	
 	if (min == null)
-		return Math.floor(Math.random() * max);
+		//return Math.floor(Math.random() * max);
+		return (Math.random() * max);
 		
 	difference = max - min;
-	return min + Math.floor(Math.random() * difference);
+	//return min + Math.floor(Math.random() * difference);
+	return min + Math.random() * difference;
 };
