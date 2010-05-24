@@ -18,3 +18,21 @@ To extend a canvas with the JCK functionality you need to call this function:
 {{{
 jck(canvasElement [options]);
 }}}
+
+I'll explain the options in a moment.
+
+The "canvasElement" is a reference to an HTML 5 canvas element, however you created it.  A handy way to to JCK-ify all of the canvases on the document at once  is with this handy jQuery snippet:
+
+{{{
+$(document).ready(function(){
+    $("canvas").each(function(){
+         jck(this);
+    });
+});
+}}}
+
+When the document loads, jQuery will traverse the entire DOM and pass each canvas element through the jck() function.
+
+= Optional parameters =
+
+Coming soon!
