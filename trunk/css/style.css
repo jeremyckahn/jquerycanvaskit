@@ -13,32 +13,6 @@ body{
 	background:				#222;
 }
 
-/*  Profiler rules should be done in JS */
-.profilerOutput{	
-	background:				#111;
-	font-size:				16px;
-	left:					30px;
-	list-style-type:		none;
-	max-height:				350px;
-	opacity:				0.8;
-	overflow:				auto;
-	padding:				8px;
-	position:				fixed;
-	top:					30px;
-	
-	-moz-border-radius: 	8px; 
-	-webkit-border-radius: 	8px;
-}
-
-.profilerOutput li{
-	margin:					3px 0px;	
-}
-
-.profilerOutput .label{
-	font-weight:			bold;
-	margin:					0px 15px 0px 0px;
-}
-
 .controlPanelLeftOffset{
 	left:					10px;
 }
@@ -56,4 +30,3 @@ ul.controlPanelLeftOffset li{
 .buttonList li{
 	display:				inline;
 }
-
