@@ -1,0 +1,20 @@
+#summary How do I get started?
+
+= Required files =
+
+The jQuery Canvas Kit is very easy implement.  To start, you need to include the requisite libraries:
+
+  *jQuery 1.4.2 or above
+  *jQueryUI 1.8 or above
+
+...and all files associated with those.  Please see the jQuery site (www.jquery.com) for information regarding those libraries.  These libraries are distributed in the .ZIP packages for each JCK release for convenience.
+
+Once you have included these files in your document, you will need to include jckstyle.css and jck.js.
+
+= Initialization =
+
+To extend a canvas with the JCK functionality you need to call this function:
+
+{{{
+jck(canvasElement [options]);
+}}}
