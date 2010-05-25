@@ -40,8 +40,8 @@ There are a number of options that can either be set upon initialization or afte
 {{{
 jck(this,
     {
-	[option1 : value1,]
-	[option2 : value2,]
+	[options.option1 : value1,]
+	[options.option2 : value2,]
         ...
     });
 }}}
@@ -49,4 +49,5 @@ jck(this,
 And so on.
 
 The options are as follows:  
-  * *framerate* (Integer) This is the speed (measured in frames per second) at which your application will run.  It is recommended to stay within 12 to 30 frames per second.
+  * *options.framerate* (Integer, default: 20) This is the speed (measured in frames per second) at which your application will run.  It is recommended to stay within 12 to 30 frames per second.
+  * *options.autoUpdate* (Boolean, default: true) If true, the canvas will update automatically at the speed defined by options.framerate.
