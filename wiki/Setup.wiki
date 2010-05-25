@@ -35,4 +35,15 @@ When the document loads, jQuery will traverse the entire DOM and pass each canva
 
 = Optional parameters =
 
-Coming soon!
+There are a number of options that can either be set upon initialization or afterwards.  To set the options (explained momentarily), use this syntax:
+
+{{{
+jck(this,
+    {
+	[option1 : value1,]
+	[option2 : value2,]
+        ...
+    });
+}}}
+
+And so on.
