@@ -47,3 +47,6 @@ jck(this,
 }}}
 
 And so on.
+
+The options are as follows:  
+  * *framerate* (Integer) This is the speed (measured in frames per second) at which your application will run.  It is recommended to stay within 12 to 30 frames per second.
