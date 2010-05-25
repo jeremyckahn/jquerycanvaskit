@@ -51,3 +51,5 @@ And so on.
 The options are as follows:  
   * *options.framerate* (Integer, default: 20) This is the speed (measured in frames per second) at which your application will run.  It is recommended to stay within 12 to 30 frames per second.
   * *options.autoUpdate* (Boolean, default: true) If true, the canvas will update automatically at the speed defined by options.framerate.
+
+More to come!
