@@ -51,5 +51,10 @@ And so on.
 The options are as follows:  
   * *options.framerate* (Integer, default: 20) This is the speed (measured in frames per second) at which your application will run.  It is recommended to stay within 12 to 30 frames per second.
   * *options.autoUpdate* (Boolean, default: true) If true, the canvas will update automatically at the speed defined by options.framerate.
+  * *options.autoClear* (Boolean, default: true) If true, the canvas will be cleared out and and start fresh upon update.  This is desirable in most situations, although there is a performance cost.
+  * *options.fullscreen* (Boolean, default: false) If true, the canvas will take up the entire browser window.
+  * *options.showProfiler* (Boolean, default: false) Determines whether to show the performance profiler when the canvas is initialized.  Generally not recommended for production use.
+  * *options.autoUpdateProfiler* (Boolean, default: false) If true, the profiler updating calls will be handled for you.  This is easier, but custom profiler values will not work properly when set to true (the real-time framerate monitor will still work just fine).  Additionally, updating the profiler takes some CPU cycles, so you will want this set to false when your app is ready for production use.
+  * *options.sampleFrames* (Boolean, default: false) This needs to be set to true in order for the framerate monitor to work.  Off by default because there is a performance cost.  Make sure to set it to false when your app is done.
 
 More to come!
