@@ -1,0 +1,12 @@
+#summary Get inside your app
+
+= What is the performance profiler? =
+
+The performance profiler is a little draggable popup that will give you a live readout of the values and properties for a kitted canvas.  By default, it has the capability to tell you which JCK options are set and actual frames per second.  It can be extended with your own custom values.
+
+= Actual frames per seccond vs. attempted frames per second =
+
+The JCK is designed run as close to the speed specified by `options.framerate` as possible.  In actuality, that's not possible.  The actual framerate will always be a little higher or lower than than `options.framerate`, but in most cases, it is not apparent to the user.  In situations where your app is using a lot of your computer's resources (RAM, CPU), the actual framerate may dip well below the desired framerate.  Applications may also run at a lower framerate on slower hardware.  The profiler will help you identify these situations.
+
+
+Setup instructions coming soon...
