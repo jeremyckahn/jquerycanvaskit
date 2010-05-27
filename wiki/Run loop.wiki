@@ -1,0 +1,6 @@
+#summary The heart of the JCK
+
+= What's a run loop? =
+
+A run loop is term that is often used in video game development.  Games typically run in a loop, and the screen is redrawn continuously.  The jQuery Canvas Kit makes makes this design pattern the core of it's functionality.  This also has several other names, such as draw loop, run cycle, and so on.
+
