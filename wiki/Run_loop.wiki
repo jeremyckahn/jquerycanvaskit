@@ -90,4 +90,4 @@ $(document).ready(function(){
 </script>
 }}}
 
-This script will create a black canvas, and a ball that will slowly move to the right until it is out of the frame entirely.  You can just plug this in to your HTML code and it will automagically work, assuming everything was set up correctly (please see the "[Setup] wiki article" for more information about that).
+This script will create a black canvas, and a ball that will slowly move to the right until it is out of the frame entirely.  You can just plug this in to your HTML code and it will automagically work, assuming everything was set up correctly (please see the [Setup] for more information about that).
