@@ -25,10 +25,10 @@ Sounds tricky?  Don't worry, they're set by default!  So, for the sake of clarit
 $(document).ready(function(){
     $("canvas").each(function(){
          jck(this,{
-			framerate 		: 20,
-			autoUpdate 		: true,
-			autoClear 		: true
-		 });
+	     framerate 		: 20,
+	     autoUpdate         : true,
+	     autoClear 		: true
+         });
     });
 });
 }}}
@@ -49,7 +49,7 @@ var global = {
 	ballColor : '#f0f',
 	canvasColor : '#222',
 	canvasHeight : 100,
-	canvasWidth	: 400
+	canvasWidth : 400
 };
 
 // Execute this code when the document loads
