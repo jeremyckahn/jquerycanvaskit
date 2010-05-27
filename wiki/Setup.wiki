@@ -62,3 +62,7 @@ Changing most of these options after the initialization time won't have an effec
 = Defining height and width = 
 
 One thing you may want to do right off the bat with your canvas is specify a height and width.  You could certainly modify the standard `height` and `width` canvas properties, but the problem with that is that DOM `height` and `width` canvas properties do not correlate to the CSS `height` and `width` values.  To change all of the appropriate values simultaneously and keep everything in sync, use `canvas.getHeight()` and `canvas.setHeight()` to modify/evaluate the canvas's height, and `canvas.getWidth()` and `canvas.setWidth()` for the width.
+
+= Now what? =
+
+You're probably going to want to do something with your newly kitted canvas.  A good next step is understanding and defining your [Run_loop run loop].
