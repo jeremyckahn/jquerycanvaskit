@@ -63,17 +63,17 @@ $(document).ready(function(){
 </script>
 }}}
 
-Ok, so now all we have to do initialize the profiler is call `createProfiler()` on the kitted canvas since `this` is in `canvas` context within our jQuery `each()` function.  We can just call:
+Ok, so now all we have to do in order to initialize the profiler is call `createProfiler()` on the kitted canvas since `this` is a `canvas` with the context of our jQuery `each()` function.  We can just call:
 
 {{{
 	this.createProfiler();
 }}}
 
-Inside of the each().  Don't worry, I'll put this all together for you at the end of this article in case you get lost.
+Inside of the `each()`.  Don't worry, I'll put this all together for you at the end of this section in case you get lost.
 
-There are two ways to update the profiler, have the JCK do it automatically or code it ouerselves.  Letting the JCK do it is easier, but we can't customize it.  For now, we will relinquish control to the JCK just to get something up and running.
+There are two ways to update the profiler, have the JCK do it automatically or code it ourselves.  Letting the JCK do it is easier, but we can't customize it.  For now, we will relinquish control to the JCK just to get something up and running.
 
-After calling `createProfiler()`, we will call `togglePause()` and set autoUpdate to `true`.  Like this:
+After calling `createProfiler()`, we will call `togglePause()` and set `autoUpdate` to `true`.  Like this:
 
 {{{
 	this.createProfiler();
@@ -87,9 +87,9 @@ Viola!  We now have a profiler.  Go ahead, drag it around!  If we want to measur
 	this.options.sampleFrames = true;
 }}}
 
-Of course, we could set these options when we called `jck()` as well.  The reason these options are not both set by default is because having `autoUpdateProfiler` and `sampleFrames` on will use some CPU cycles each frame... so make sure to disable the profiler when you are done developing/testing.
+Of course, we could set these options when we called `jck()` as well.  The reason these options are not both set by default is because having `autoUpdateProfiler` and `sampleFrames` enabled will use some CPU cycles each frame... so make sure to disable the profiler when you are done developing/testing.
 
-Here's the update example, all together:
+Here's the updated example, all together:
 
 {{{
 <script type="text/javascript">
