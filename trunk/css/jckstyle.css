@@ -8,6 +8,8 @@ body{
 
 .profilerOutput{	
 	background:				#111;
+	color:					#ccc;
+	font-family:			arial;
 	font-size:				16px;
 	left:					30px;
 	list-style-type:		none;
