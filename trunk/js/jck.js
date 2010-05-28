@@ -25,9 +25,9 @@ function jck(canvas, options){
 	if (options == null)
 		options = {};
 	
-	// If the canvas does does not have an ID, generate one
-	if (canvas.id == null)
-		canvas.id = random(0, 100000000);
+	// If the canvas does does not have an ID, generate a random one
+	if (canvas.id == "")
+		canvas.id = parseInt(random(0, 100000000));
 	
 	canvas.context = canvas.getContext("2d");
 	
