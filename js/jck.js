@@ -22,6 +22,12 @@
 
 function jck(canvas, options){
 	
+	canvas.defaults = {
+		'context'			: '2d',
+		'drawColor'			: '#555',
+		'circleRadius'		: '30'
+	};
+	
 	if (options == null)
 		options = {};
 	
@@ -29,7 +35,7 @@ function jck(canvas, options){
 	if (canvas.id == "")
 		canvas.id = parseInt(random(0, 100000000));
 	
-	canvas.context = canvas.getContext("2d");
+	canvas.context = canvas.getContext(canvas.defaults.context);
 	
 	// Give the canvas a JSON object representing things to draw in the drawlist
 	canvas.drawlist = {};
@@ -174,6 +180,16 @@ function jck(canvas, options){
 	
 	// Now that the update function has been defined, repeat it at the rate defined by canvas.options.framerate
 	canvas.updateHandle = setInterval(canvas.update, parseInt(1000 / canvas.options.framerate));
+	
+	/*	Draw a simple cicrle.  Won't necessarily give you the greatest performance, but works as
+		a good general-purpose drawing utilitiy. */
+	canvas.circle = function(x, y, radius, color){
+		this.context.beginPath();
+		this.context.arc(!!x ? x : 0, !!y ? y : 0, (!!radius ? radius : this.defaults.circleRadius), 0, Math.PI*2, true);
+		this.context.fillStyle = !!color ? color : this.defaults.drawColor;
+		this.context.fill();
+		this.context.closePath();
+	}
 	
 	/* - END Additional canvas functions - */
 	
