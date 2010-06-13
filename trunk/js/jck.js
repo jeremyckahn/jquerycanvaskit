@@ -189,7 +189,41 @@ function jck(canvas, options){
 		this.context.fillStyle = !!color ? color : this.defaults.drawColor;
 		this.context.fill();
 		this.context.closePath();
-	}
+	};
+	
+	/*	Draw a polygon.  pointsX and pointsY are corresponding arrays of points.  
+		color, offsetX and offsetY are optional values.
+		
+		You can define a polygon's dimensions with pointsX and pointsY, and independantly move
+		the shape around with offsetX and offsetY. */
+	canvas.polygon = function(pointsX, pointsY, offsetX, offsetY, color){
+		function getOffsetX(x){
+			return x + offsetX;
+		}
+		
+		function getOffsetY(y){
+			return y + offsetY;
+		}
+		
+		this.context.beginPath();
+		
+		// Get the smaller of the two points arrays so they match up correctly
+		points = pointsX.length > pointsY.length ? pointsY.length : pointsX.length;
+		
+		// Start off the pen at the first point
+		this.context.moveTo(getOffsetX(pointsX[0]), getOffsetY(pointsY[0]));
+		
+		for (i = 1; i < points; i++)
+			this.context.lineTo(getOffsetX(pointsX[i]), getOffsetY(pointsY[i]));
+			
+		// Close the polygon by drawing a line back to the first point
+		this.context.lineTo(getOffsetX(pointsX[0]), getOffsetY(pointsY[0]));
+		
+		this.context.strokeStyle = this.context.fillStyle = !!color ? color : this.defaults.drawColor;
+		this.context.fill();
+		this.context.stroke();
+		this.context.closePath();
+	};
 	
 	/* - END Additional canvas functions - */
 	
