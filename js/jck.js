@@ -250,7 +250,10 @@ function jck(canvas, options){
 			$(this).addClass("profilerOutput").draggable();
 		});
 		
-		this.hideProfiler();
+		if (!this.options.showProfiler)
+			this.hideProfiler();
+		else
+			this.showProfiler();
 	}
 	
 	// Completely remove the profiler from the document
@@ -305,6 +308,7 @@ function jck(canvas, options){
 		for (i = 0; i < this.additionalProfilerOutputs.length; i++)
 			$(makeProfilerLI(this, this.additionalProfilerOutputs[i].label, this.additionalProfilerOutputs[i].value)).appendTo("#" + this.profilerID);
 			
+		
 	};
 	
 	/*	If you are calling this explicitly and are passing custom values, you must pass them as the parameters here as well.
