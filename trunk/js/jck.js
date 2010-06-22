@@ -137,6 +137,8 @@ function jck(canvas, options){
 		if (!this.options.autoUpdate && this.showProfiler){
 			this.updateProfiler();	
 		}
+		
+		$('#' + this.profilerID + ' li.pause').html(getPauseText(this));
 	};
 		
 	/*	Redraw routine for the canvas.  Also acts as a wrapper for canvas.runloop.
@@ -236,7 +238,7 @@ function jck(canvas, options){
 		Alternatively, you can set options.autoUpdateProfiler to true and have it update the jck values only.  This approach
 		does not allow for custom live-updated values, however.  */
 	canvas.createProfiler = function(){
-		info = "";
+		info = '<li class="pause">' + getPauseText(this) + '</li>';
 			
 		for(var option in this.options)
 			info += makeProfilerLI(this, option, this.options[option]);
@@ -247,7 +249,11 @@ function jck(canvas, options){
 		$("body").append(makeProfilerUL(this, info));
 		
 		$("#" + this.profilerID).each(function(){
-			$(this).addClass("profilerOutput").draggable();
+			$(this).addClass("profilerOutput")
+			.draggable()
+			.find('li.pause').click(function(){
+				canvas.togglePause();
+			});
 		});
 		
 		if (!this.options.showProfiler)
@@ -307,8 +313,6 @@ function jck(canvas, options){
 			
 		for (i = 0; i < this.additionalProfilerOutputs.length; i++)
 			$(makeProfilerLI(this, this.additionalProfilerOutputs[i].label, this.additionalProfilerOutputs[i].value)).appendTo("#" + this.profilerID);
-			
-		
 	};
 	
 	/*	If you are calling this explicitly and are passing custom values, you must pass them as the parameters here as well.
@@ -360,3 +364,7 @@ function random(max, min){
 	difference = max - min;
 	return min + Math.random() * difference;
 };
+
+function getPauseText(canvas){
+	return canvas.options.autoUpdate ? 'Pause' : 'Unpause';
+}
