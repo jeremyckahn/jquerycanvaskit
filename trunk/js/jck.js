@@ -1,7 +1,12 @@
 /*
 	jQuery Canvas Kit
-	v. 0.1
+	v. 0.2
+	Updated: 7/3/2010
+	
 	by Jeremy Kahn - jeremyckahn@gmail.com
+	http://www.jerbils.com/
+
+	SVN: http://code.google.com/p/jquerycanvaskit/
 
 	jQuery Canvas Kit (JCK) is a jQuery toolkit that extends functionality of the HTML 5 
 	canvas tag.  To use it, simply call the jck() function with the canvas element as 
@@ -143,11 +148,19 @@ function jck(canvas, options){
 		
 	/*	Redraw routine for the canvas.  Also acts as a wrapper for canvas.runloop.
 		Define your redraw logic with canvas.runloop, overriding this function
-		is a bad idea.	*/
-	canvas.update = function(){
+		is a bad idea.	
+		
+		options: 
+			-manualFrameUpdate: If the user wants to update the canvas once without having it
+				automatically repeat.  Calling canvas.update({manualFrameUpdate : true}) is better than
+				calling canvas.runloop() because the update is then wrapped in all of the JCK's
+				built-in frame update functionality.
+			
+		*/
+	canvas.update = function(options){
 		
 		// If autoUpdate is turned off, just exit out of the function
-		if (!canvas.options.autoUpdate)
+		if (!canvas.options.autoUpdate && !options.manualFrameUpdate)
 			return;
 		
 		/*	If autoClear is enabled, clear out the canvas before redrawing it.
