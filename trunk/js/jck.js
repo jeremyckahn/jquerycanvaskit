@@ -104,6 +104,11 @@ function jck(canvas, options){
 		this.width = (newWidth);
 	};
 	
+	canvas.setSize = function(width, height){
+		this.setWidth(width);
+		this.setHeight(height);		
+	};
+	
 	// Call this to set the canvas's dimensions equal to that of the window
 	canvas.stretchToFullscreen = function(){
 		canvas.setHeight($(window).height());
@@ -127,6 +132,10 @@ function jck(canvas, options){
 	
 	canvas.getWidth = function(){
 		return this.width;
+	};
+	
+	canvas.getSize = function(){
+		return {'width' : this.getWidth(), 'height' : this.getHeight()};	
 	};
 	/* - END Getters - */
 	
@@ -158,6 +167,9 @@ function jck(canvas, options){
 			
 		*/
 	canvas.update = function(options){
+		// If no options are given, set it to an empty object to prevent endless erroring.
+		if (!options)
+			options = {};
 		
 		// If autoUpdate is turned off, just exit out of the function
 		if (!canvas.options.autoUpdate && !options.manualFrameUpdate)
