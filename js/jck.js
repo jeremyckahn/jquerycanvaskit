@@ -33,12 +33,14 @@ function jck(canvas, options){
 		'circleRadius'		: '30'
 	};
 	
-	if (options == null)
+	if (!options)
 		options = {};
 	
 	// If the canvas does does not have an ID, generate a random one
 	if (canvas.id == "")
 		canvas.id = parseInt(random(0, 100000000));
+		
+	canvas.isKitted = true;
 	
 	canvas.context = canvas.getContext(canvas.defaults.context);
 	
@@ -52,11 +54,72 @@ function jck(canvas, options){
 	// Used to give a real-time output of how many frames are actually being rendered
 	canvas.frameSampleTimes = new Array();
 	
+	
+	// Implement many settable JCK options
+	/* 	TODO:  Currently under construction.  This is on of the primary functions of the JCK, and it's
+		good enough for now, but needs to be filled out more and completed. */
+	canvas.updateOptions = function(options){
+		if (!options)
+			options = {};
+			
+		for (option in options){
+			switch (option){
+				case 'autoClear':
+					this.options.autoClear = options.autoClear;
+					
+				break;
+				
+				case 'autoUpdate':
+					this.options.autoUpdate = options.autoUpdate;
+					
+					if (!this.options.autoUpdate && this.showProfiler){
+						this.updateProfiler();	
+					}
+					
+					$('#' + this.profilerID + ' li.pause').html(getPauseText(this));
+					
+				break;
+				
+				case 'framerate':
+					this.options.framerate = getValidFramerate(options.framerate);
+					clearInterval(this.updateHandle);
+					this.updateHandle = setInterval(this.update, parseInt(1000 / this.options.framerate));
+					
+				break;
+				
+				case 'fullscreen':
+					this.options.fullscreen = options.fullscreen;
+				
+					// Call this to set the canvas's dimensions equal to that of the window
+					this.goFullscreen = function(){
+						// TODO: This does not currently place the canvas in the upper left corner of the screen.  It needs to do that.
+						canvas.setHeight($(window).height());
+						canvas.setWidth($(window).width());
+					};
+					
+					// 	Now that the fullscreen logic has been defined, use it to set the canvas to fullscreen 
+					//	if the option was set at initialization time
+					if (this.options.fullscreen){
+						this.goFullscreen();
+						$(window).bind('resize', this.goFullscreen);
+					}
+					else{
+						// TODO:  Currently this wipes out all $(window).resize events.  Needs to be fixed.
+						$(window).unbind('resize'/*, this.goFullscreen*/);
+					}	
+				
+				break;
+				
+	//			default:
+	//				throw('invalidOrUnchangeableJCKOption')
+			}	
+		}
+	};
+	
 	// Set default options
 	
-	// The attempted frames processed per second
-	if (options.framerate == null)
-		options.framerate = 20;
+	// The attempted frames processed per second		
+	options.framerate = options.framerate == null ? 20 : getValidFramerate(options.framerate);
 		
 	// If true, the canvas will be updated at the rate defined by the framerate option
 	if (options.autoUpdate == null)
@@ -109,22 +172,6 @@ function jck(canvas, options){
 		this.setHeight(height);		
 	};
 	
-	// Call this to set the canvas's dimensions equal to that of the window
-	canvas.stretchToFullscreen = function(){
-		canvas.setHeight($(window).height());
-		canvas.setWidth($(window).width());
-	}
-	
-	/* 	Now that the fullscreen logic has been defined, use it to set the canvas to fullscreen 
-		if the option was set at initialization time /**/
-	if (canvas.options.fullscreen){
-		$(window).resize(function(){
-			canvas.stretchToFullscreen();
-		});
-		
-		canvas.stretchToFullscreen();
-	}
-	
 	/* - Getters - */
 	canvas.getHeight = function(){
 		return this.height;
@@ -147,12 +194,7 @@ function jck(canvas, options){
 	// Toggle the pause status of the canvas's update loop
 	canvas.togglePause = function(){
 		this.options.autoUpdate = !this.options.autoUpdate;
-		
-		if (!this.options.autoUpdate && this.showProfiler){
-			this.updateProfiler();	
-		}
-		
-		$('#' + this.profilerID + ' li.pause').html(getPauseText(this));
+		this.updateOptions({'autoUpdate' : this.options.autoUpdate});
 	};
 		
 	/*	Redraw routine for the canvas.  Also acts as a wrapper for canvas.runloop.
@@ -206,10 +248,10 @@ function jck(canvas, options){
 	};
 	
 	// Now that the update function has been defined, repeat it at the rate defined by canvas.options.framerate
-	canvas.updateHandle = setInterval(canvas.update, parseInt(1000 / canvas.options.framerate));
+	canvas.updateOptions({framerate : canvas.options.framerate})
 	
 	/*	Draw a simple cicrle.  Won't necessarily give you the greatest performance, but works as
-		a good general-purpose drawing utilitiy. */
+		a good general-purpose drawing utility. */
 	canvas.circle = function(x, y, radius, color){
 		this.context.beginPath();
 		this.context.arc(!!x ? x : 0, !!y ? y : 0, (!!radius ? radius : this.defaults.circleRadius), 0, Math.PI*2, true);
@@ -357,6 +399,8 @@ function jck(canvas, options){
 	}
 	/* - END Profiler functions - */
 	
+	canvas.updateOptions(canvas.options);
+	
 	return canvas;
 }
 
@@ -392,4 +436,8 @@ function random(max, min){
 
 function getPauseText(canvas){
 	return canvas.options.autoUpdate ? 'Pause' : 'Unpause';
+}
+
+function getValidFramerate(framerate){
+	return (Math.abs(framerate))
 }
