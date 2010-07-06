@@ -69,6 +69,10 @@ function jck(canvas, options){
 					
 				break;
 				
+				case 'autoClear':
+					this.options.autoClear = options.autoClear;					
+				break;
+				
 				case 'autoUpdate':
 					this.options.autoUpdate = options.autoUpdate;
 					
@@ -89,25 +93,22 @@ function jck(canvas, options){
 				
 				case 'fullscreen':
 					this.options.fullscreen = options.fullscreen;
-				
-					// Call this to set the canvas's dimensions equal to that of the window
-					this.goFullscreen = function(){
-						// TODO: This does not currently place the canvas in the upper left corner of the screen.  It needs to do that.
-						canvas.setHeight($(window).height());
-						canvas.setWidth($(window).width());
-					};
-					
-					// 	Now that the fullscreen logic has been defined, use it to set the canvas to fullscreen 
-					//	if the option was set at initialization time
+					/* 	TODO: This does not currently place the canvas in the upper left corner of the screen.  It needs to do that.
+						This will take some voodoo because the canvas must be outside of every other element.*/
 					if (this.options.fullscreen){
-						this.goFullscreen();
-						$(window).bind('resize', this.goFullscreen);
+						$(window).bind('resize.' + this.id, function(){
+							canvas.setHeight($(window).height());
+							canvas.setWidth($(window).width());
+						}).resize();
 					}
 					else{
-						// TODO:  Currently this wipes out all $(window).resize events.  Needs to be fixed.
-						$(window).unbind('resize'/*, this.goFullscreen*/);
-					}	
+						$(window).unbind('resize.' + this.id);
+					}
 				
+				break;
+				
+				case 'showProfiler':
+					this.options.showProfiler = options.showProfiler;					
 				break;
 				
 	//			default:
@@ -134,7 +135,7 @@ function jck(canvas, options){
 	if (options.fullscreen == null)
 		options.fullscreen = false;
 	
-	// Controls wether the profiler for this canvas is displayed
+	// Controls whether the profiler for this canvas is displayed
 	if (options.showProfiler == null)
 		options.showProfiler = false;
 		
@@ -434,10 +435,15 @@ function random(max, min){
 	return min + Math.random() * difference;
 };
 
+// Some JCK utilities
 function getPauseText(canvas){
 	return canvas.options.autoUpdate ? 'Pause' : 'Unpause';
 }
 
 function getValidFramerate(framerate){
 	return (Math.abs(framerate))
+}
+
+function create(element){
+	return document.createElement(element);
 }
