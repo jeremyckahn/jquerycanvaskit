@@ -56,8 +56,13 @@ function jck(canvas, options){
 	
 	
 	// Implement many settable JCK options
-	/* 	TODO:  Currently under construction.  This is on of the primary functions of the JCK, and it's
-		good enough for now, but needs to be filled out more and completed. */
+	/* 	TODO:  Currently under construction.  This is one of the primary functions of the JCK, and it's
+		good enough for now, but needs to be filled out more and completed. 
+		
+		Also TODO:  Move the functionality of setting the defaults to this function, it's unneccessary 
+		to have them set elsewhere.  
+		
+		Further TODO:  Have the rest of the framework change the options through this function whenever possible. */
 	canvas.updateOptions = function(options){
 		if (!options)
 			options = {};
@@ -80,8 +85,11 @@ function jck(canvas, options){
 						this.updateProfiler();	
 					}
 					
-					$('#' + this.profilerID + ' li.pause').html(getPauseText(this));
-					
+					$('#' + this.profilerID + ' li.pause').html(getPauseText(this));	
+				break;
+				
+				case 'autoUpdateProfiler':
+					this.options.autoUpdateProfiler = options.autoUpdateProfiler;
 				break;
 				
 				case 'framerate':
@@ -107,12 +115,16 @@ function jck(canvas, options){
 				
 				break;
 				
-				case 'showProfiler':
-					this.options.showProfiler = options.showProfiler;					
+				case 'sampleFrames':
+					this.options.sampleFrames = options.sampleFrames;
 				break;
 				
-	//			default:
-	//				throw('invalidOrUnchangeableJCKOption')
+				case 'showProfiler':
+					options.showProfiler ? this.showProfiler() : this.hideProfiler();
+				break;
+				
+				default:
+					throw('invalidOrUnchangeableJCKOption')
 			}	
 		}
 	};
