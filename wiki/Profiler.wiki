@@ -63,7 +63,7 @@ $(document).ready(function(){
 </script>
 }}}
 
-Ok, so now all we have to do in order to initialize the profiler is call `createProfiler()` on the kitted canvas since `this` is a `canvas` with the context of our jQuery `each()` function.  We can just call:
+Ok, so now all we have to do in order to initialize the profiler is call `createProfiler()` on the kitted canvas since `this` is a `canvas` within the context of our jQuery `each()` function.  We can just call:
 
 {{{
 	this.createProfiler();
@@ -148,4 +148,50 @@ $(document).ready(function(){
 </script>
 }}}
 
-Advanced methods coming soon!
+= Adding custom properties =
+
+Seeing only built-in JCK variables in the profiler is helpful only to a certain extent.  If you are making something of any complexity, you will likely want your own values.  The JCK profiler supports that.  To do this, there are two additional steps.  When you initialize the profiler, you will have to feed it custom values as an array of JSON objects, and then update the profiler every frame in your run loop with that same array.
+
+There is a JCK method called `addProfilerValue()`.  It makes the most sense to call this sometime between calling `jck()` itself and defining the run loop.  It is expecting the array of JSON objects I mentioned a moment ago, and the object model for the JSON is as follows:
+
+{{{
+{	
+	label : "whatYouWillSeeAsALabel",
+	value : theValueOfWhateverYouWant
+}
+}}}
+
+A practical example of calling calling `addProfilerValue()`:
+
+{{{
+this.addProfilerValue([
+	{	
+		label : "Player health",
+		value : health
+	},
+	{	
+		label : "Enemies remaining",
+		value : enemiesArray.length
+	}
+]);
+}}}
+
+... Assuming that `health` and `enemiesArray` are variables in your app.
+
+That's the first step.  Next, we have to call `updateProfiler()` on the canvas.  It takes the same data that we fed `addProfilerValue()`.  You will want to stick this somewhere in your run loop, but in most cases it is best to tack it on somewhere towards the end of the run loop.  In keeping with the previous example, here is how we might call `updateProfiler()` inside the run loop:
+
+{{{
+this.runloop = function(){
+	this. updateProfiler([
+	{	
+		label : "Player health",
+		value : health
+	},
+	{	
+		label : "Enemies remaining",
+		value : enemiesArray.length
+	}]);
+};
+}}}
+
+When the profiler is visible, these values will be updated in real time.
