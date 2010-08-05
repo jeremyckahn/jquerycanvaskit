@@ -217,10 +217,11 @@ function profilerValues(){
 
 {{{
 $('canvas').each(function(){
-	jck(this{
+	jck(this, {
 		autoUpdate		: true,
 		autoUpdateProfiler	: false,
 		sampleFrames		: true,
+		showProfiler		: true
 	});
 
 	this.addProfilerValue(profilerValues());
