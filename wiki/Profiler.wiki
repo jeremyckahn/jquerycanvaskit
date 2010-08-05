@@ -195,3 +195,51 @@ this.runloop = function(){
 }}}
 
 When the profiler is visible, these values will be updated in real time.
+
+= Advanced tip =
+
+The `addProfilerValue()` and `updateProfiler()` redundancy is necessary because the JCK does not otherwise know about your application's values.  If you update one function call's parameters, you need to make sure that the other is updated in sync, or bad things will happen.  What you can do to prevent any inconsistencies is to simply make a function out of the array.  Using our previous example:
+
+{{{
+function profilerValues(){
+	return [{	
+		label : "Player health",
+		value : health
+	},
+	{	
+		label : "Enemies remaining",
+		value : enemiesArray.length
+	}]
+}
+}}}
+
+...and we can use this like so (quick and dirty full example):
+
+{{{
+$('canvas').each(function(){
+	jck(this{
+		autoUpdate		: true,
+		autoUpdateProfiler	: false,
+		sampleFrames		: true,
+	});
+
+	this.addProfilerValue(profilerValues());
+
+	this.runloop(function(){
+		this.updateProfiler(profilerValues());
+	});
+});
+
+function profilerValues(){
+	return [{	
+		label : "Player health",
+		value : health
+	},
+	{	
+		label : "Enemies remaining",
+		value : enemiesArray.length
+	}]
+}
+}}}
+
+Cool!
