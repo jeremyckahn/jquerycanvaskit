@@ -5,7 +5,8 @@
 
   * jQuery plugin architecture
   * New run loop engine
-
+  * APIs
+  * Development tools
 
 == jQuery plugin architecture ==
 
@@ -13,4 +14,30 @@ Follow this guide: http://docs.jquery.com/Plugins/Authoring
 
 == New run loop engine ==
 
-*The big idea:*  The original version of the JCK's run loop was driven by setInterval().  This is bad.  If the draw cycles become too busy, the frames stack up uncontrollably and, even if the update function is quit out of, this is still sloppy.  A self-calling setTimeout() should be used.  Not only that, but draw coordinates are statically governed in the original version - they should be calculated based on real time.  The JCK API should calculate this.  
+*The big idea:*  The original version of the JCK's run loop was driven by setInterval().  This is bad.  If the draw cycles become too busy, the frames stack up uncontrollably and, even if the update function is quit out of, this is still sloppy.  A self-calling setTimeout() should be used.  Not only that, but draw coordinates are statically governed in the original version - they should be calculated based on real time.  The JCK APIs, described below should calculate this.
+
+== APIs ==
+
+There will be several APIs associated with the JCK.  They are as such:
+
+  * Shapes API
+  * Animation API
+  * Events API
+  * Canvas Manager API
+
+
+== Shapes API ==
+
+An API for describing how a shape looks.  All of the objects in the Shapes API will inherit from *jckShape*.  Users will also be free to create their own shapes that inherit from jckShape.  Predefined shapes are:
+
+  * jckShape.circle
+  * jckShape.rect
+  * jckShape.poly
+  * jckShape.bezier
+
+== Animation API - jckAnimate ==
+
+An API for describing the movement of a jckShape.  However, any datatype can be implement the jckAnimate API, so long as it implements the *jckAnimateable* interface.  Serves as a wrapper for jquery.animate().  There will be several ways to animate a jckAnimateable.  Primary methods for animation:
+
+  * jckAnimateable.moveTo() - Move to a specified coordinate
+  * jckAnimateable.moveBy() - Move in a specified direction by a specified speed
