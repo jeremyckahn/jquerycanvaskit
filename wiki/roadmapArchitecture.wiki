@@ -1,0 +1,16 @@
+#summary How the rebuilt JCK should be structured
+#labels Phase-Design
+
+= Overview =
+
+  * jQuery plugin architecture
+  * New run loop engine
+
+
+== jQuery plugin architecture ==
+
+Follow this guide: http://docs.jquery.com/Plugins/Authoring
+
+== New run loop engine ==
+
+*The big idea:*  The original version of the JCK's run loop was driven by setInterval().  This is bad.  If the draw cycles become too busy, the frames stack up uncontrollably and, even if the update function is quit out of, this is still sloppy.  A self-calling setTimeout() should be used.  Not only that, but draw coordinates are statically governed in the original version - they should be calculated based on real time.  The JCK API should calculate this.  
