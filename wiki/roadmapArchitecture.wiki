@@ -22,6 +22,7 @@ There will be several APIs associated with the JCK.  They are as such:
 
   * Shapes API
   * Animation API
+  * Text API
   * Events API
   * Canvas Manager API
 
@@ -35,9 +36,26 @@ An API for describing how a shape looks.  All of the objects in the Shapes API w
   * jckShape.poly
   * jckShape.bezier
 
+There *must* be support for SVGs as well, but that will come later as they are significantly more complicated than primitive shapes.
+
+The Shapes API will manage all aspects of how a shape is displayed, such as:
+
+  * Position
+  * Size
+  * Scale
+  * Color
+  * Opacity
+  * Transform (rotation)
+
+*Note:*  These display elements will have to be moved into their own class so that things like *jckText* can use it too.  Perhaps a *jckDisplayable* interface?
+
 == Animation API - jckAnimate ==
 
 An API for describing the movement of a jckShape.  However, any datatype can be implement the jckAnimate API, so long as it implements the *jckAnimateable* interface.  Serves as a wrapper for jquery.animate().  There will be several ways to animate a jckAnimateable.  Primary methods for animation:
 
   * jckAnimateable.moveTo() - Move to a specified coordinate
   * jckAnimateable.moveBy() - Move in a specified direction by a specified speed
+
+== Text API ==
+
+The HTML 5 canvas has APIs for text, so will JCK.  Will implement the jckAnimateable interface.  Base class is the *jckText* object.
