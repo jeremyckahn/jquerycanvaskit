@@ -29,7 +29,7 @@ There will be several APIs associated with the JCK.  They are as such:
 
 == Display API == 
 
-The Display API will manage all aspects of how something is displayed.  To work with the Display API, an object most implement a *jckDIsplayable* interface.  The Display API will handle all aspects of displaying something on a canvas, such as:
+The Display API will manage all aspects of how something is displayed.  To work with the Display API, an object most implement a *jckDisplayable* interface.  The Display API will handle all aspects of displaying something on a canvas, such as:
 
   * Position
   * Size
