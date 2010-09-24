@@ -14,18 +14,29 @@ Follow this guide: http://docs.jquery.com/Plugins/Authoring
 
 == New run loop engine ==
 
-*The big idea:*  The original version of the JCK's run loop was driven by setInterval().  This is bad.  If the draw cycles become too busy, the frames stack up uncontrollably and, even if the update function is quit out of, this is still sloppy.  A self-calling setTimeout() should be used.  Not only that, but draw coordinates are statically governed in the original version - they should be calculated based on real time.  The JCK APIs, described below should calculate this.
+*The big idea:*  The original version of the JCK's run loop was driven by setInterval().  This is bad.  If the draw cycles become too busy, the frames stack up uncontrollably and, even if the update function is quit out of, this is still sloppy.  A self-calling setTimeout() should be used.  Not only that, but draw coordinates are statically governed in the original version - they should be calculated based on real time.  The JCK APIs, described below should calculate this.  Since animation will be based on jQuery.animate, the new run loop will examine all objects' current state and then handle the rendering for whatever the current frame and state is.
 
 == APIs ==
 
 There will be several APIs associated with the JCK.  They are as such:
 
+  * Display API
   * Shapes API
   * Animation API
   * Text API
   * Events API
   * Canvas Manager API
 
+== Display API == 
+
+The Display API will manage all aspects of how something is displayed.  To work with the Display API, an object most implement a *jckDIsplayable* interface.  The Display API will handle all aspects of displaying something on a canvas, such as:
+
+  * Position
+  * Size
+  * Scale
+  * Color
+  * Opacity
+  * Transform (rotation)
 
 == Shapes API ==
 
@@ -37,17 +48,6 @@ An API for describing how a shape looks.  All of the objects in the Shapes API w
   * jckShape.bezier
 
 There *must* be support for SVGs as well, but that will come later as they are significantly more complicated than primitive shapes.
-
-The Shapes API will manage all aspects of how a shape is displayed, such as:
-
-  * Position
-  * Size
-  * Scale
-  * Color
-  * Opacity
-  * Transform (rotation)
-
-*Note:*  These display elements will have to be moved into their own class so that things like *jckText* can use it too.  Perhaps a *jckDisplayable* interface?
 
 == Animation API - jckAnimate ==
 
