@@ -62,7 +62,7 @@ The HTML 5 canvas has APIs for text, so will JCK.  Will implement the jckAnimate
 
 == Events API ==
 
-The Events API handles events on different JCK objects.  It is implemented with the *jckEventable* interface.  Objects that will implement this include jckShape and jckText. (Hmmm.  this may need to be baked into another API [animation?] instead of being its own.)  Events include:
+The Events API handles events on different JCK objects.  It is implemented with the *jckEventable* interface.  Objects that will implement this include jckShape and jckText. (Hmmm.  this may need to be baked into another API `[`animation?`]` instead of being its own.)  Events include:
 
   * onCollide - Collision detection
   * onBeforeCreated - Just before an element is created
