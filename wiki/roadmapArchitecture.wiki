@@ -49,7 +49,7 @@ An API for describing how a shape looks.  All of the objects in the Shapes API w
 
 There *must* be support for SVGs as well, but that will come later as they are significantly more complicated than primitive shapes.
 
-== Animation API - jckAnimate ==
+== Animation API ==
 
 An API for describing the movement of a jckShape.  However, any datatype can be implement the jckAnimate API, so long as it implements the *jckAnimateable* interface.  Serves as a wrapper for jquery.animate().  There will be several ways to animate a jckAnimateable.  Primary methods for animation:
 
@@ -59,3 +59,5 @@ An API for describing the movement of a jckShape.  However, any datatype can be 
 == Text API ==
 
 The HTML 5 canvas has APIs for text, so will JCK.  Will implement the jckAnimateable interface.  Base class is the *jckText* object.
+
+*More coming...*
