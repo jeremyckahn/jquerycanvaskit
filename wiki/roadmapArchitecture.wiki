@@ -60,4 +60,14 @@ An API for describing the movement of a jckShape.  However, any object can be im
 
 The HTML 5 canvas has APIs for text, so will JCK.  Will implement the jckAnimateable interface.  Base class is the *jckText* object.
 
-*More coming...*
+== Events API ==
+
+The Events API handles events on different JCK objects.  It is implemented with the *jckEventable* interface.  Objects that will implement this include jckShape and jckText. (Hmmm.  this may need to be baked into another API [animation?] instead of being its own.)  Events include:
+
+  * onCollide - Collision detection
+  * onBeforeCreated - Just before an element is created
+  * onAfterCreated - Just after an element is created
+  * onBeforeDestroyed  - Just before an element is destroyed
+  * onAfterDestroyed  - Just after an element is destroyed
+  * onBeforeMoved - Fired every frame before an object is moved
+  * onAfterMoved - Fired every frame after an object is moved
