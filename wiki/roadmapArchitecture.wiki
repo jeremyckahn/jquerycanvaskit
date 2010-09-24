@@ -14,7 +14,7 @@ Follow this guide: http://docs.jquery.com/Plugins/Authoring
 
 == New run loop engine ==
 
-*The big idea:*  The original version of the JCK's run loop was driven by setInterval().  This is bad.  If the draw cycles become too busy, the frames stack up uncontrollably and, even if the update function is quit out of, this is still sloppy.  A self-calling setTimeout() should be used.  Not only that, but draw coordinates are statically governed in the original version - they should be calculated based on real time.  The JCK APIs, described below should calculate this.  Since animation will be based on jQuery.animate, the new run loop will examine all objects' current state and then handle the rendering for whatever the current frame and state is.
+*The big idea:*  The original version of the JCK's run loop was driven by setInterval().  This is bad.  If the draw cycles become too busy, the frames stack up uncontrollably and, even if the update function is quit out of, this is still sloppy.  A self-calling setTimeout() should be used.  Not only that, but draw coordinates are statically governed in the original version - they should be calculated based on real time.  The JCK APIs, described below, should calculate this.  Since animation will be based on jQuery.animate(), the new run loop will examine all objects' current state and then handle the rendering for whatever the current frame and state is.
 
 == APIs ==
 
@@ -51,7 +51,7 @@ There *must* be support for SVGs as well, but that will come later as they are s
 
 == Animation API ==
 
-An API for describing the movement of a jckShape.  However, any datatype can be implement the jckAnimate API, so long as it implements the *jckAnimateable* interface.  Serves as a wrapper for jquery.animate().  There will be several ways to animate a jckAnimateable.  Primary methods for animation:
+An API for describing the movement of a jckShape.  However, any object can be implement the jckAnimate API, so long as it implements the *jckAnimateable* interface.  Serves as a wrapper for jquery.animate().  There will be several ways to animate a jckAnimateable.  Primary methods for animation:
 
   * jckAnimateable.moveTo() - Move to a specified coordinate
   * jckAnimateable.moveBy() - Move in a specified direction by a specified speed
