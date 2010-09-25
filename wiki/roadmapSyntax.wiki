@@ -1,3 +1,3 @@
-#Syntax examples of the rebuilt JCK
+#summary Syntax examples of the rebuilt JCK
 
 == Nothing here yet! ==
