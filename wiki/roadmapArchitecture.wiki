@@ -1,4 +1,4 @@
-#summary How the rebuilt JCK should be structured
+#summary How the rebuilt JCK will be structured
 #labels Phase-Design
 
 = Overview =
@@ -29,7 +29,7 @@ There will be several APIs associated with the JCK.  They are as such:
 
 == Display API == 
 
-The Display API will manage all aspects of how something is displayed.  To work with the Display API, an object most implement a *jckDisplayable* interface.  The Display API will handle all aspects of displaying something on a canvas, such as:
+The Display API will manage all aspects of how something is displayed.  To work with the Display API, an object must implement a *jckDisplayable* interface.  The Display API will handle all aspects of displaying something on a canvas, such as:
 
   * Position
   * Size
@@ -37,6 +37,13 @@ The Display API will manage all aspects of how something is displayed.  To work 
   * Color
   * Opacity
   * Transform (rotation)
+
+These all have get/set accessors.  A jckDisplayable object must also implement the following events:
+
+  * onBeforeCreated - Just before an element is created
+  * onAfterCreated - Just after an element is created
+  * onBeforeDestroyed  - Just before an element is destroyed
+  * onAfterDestroyed  - Just after an element is destroyed
 
 == Shapes API ==
 
@@ -56,18 +63,20 @@ An API for describing the movement of a jckShape.  However, any object can be im
   * jckAnimateable.moveTo() - Move to a specified coordinate
   * jckAnimateable.moveBy() - Move in a specified direction by a specified speed
 
+A jckAnimateable must implement the following events:
+
+  * onCollide - Collision detection
+  * onBeforeMoved - Fired every frame before an object is moved
+  * onAfterMoved - Fired every frame after an object is moved
+
 == Text API ==
 
 The HTML 5 canvas has APIs for text, so will JCK.  Will implement the jckAnimateable interface.  Base class is the *jckText* object.
 
-== Events API ==
+== Canvas Manager API ==
 
-The Events API handles events on different JCK objects.  It is implemented with the *jckEventable* interface.  Objects that will implement this include jckShape and jckText. (Hmmm.  this may need to be baked into another API `[`animation?`]` instead of being its own.)  Events include:
+This API will manage the display and general properties of the canvas element itself.  This includes height and width, resizing and contexts.  It will also handle full screen mode.
 
-  * onCollide - Collision detection
-  * onBeforeCreated - Just before an element is created
-  * onAfterCreated - Just after an element is created
-  * onBeforeDestroyed  - Just before an element is destroyed
-  * onAfterDestroyed  - Just after an element is destroyed
-  * onBeforeMoved - Fired every frame before an object is moved
-  * onAfterMoved - Fired every frame after an object is moved
+== Development tools ==
+
+A performance profiler much like the one from the original JCK will be implemented.  However, the API will be easier to use and the profiler itself will be faster (the display elements will be cached).  There will also be logging tools.
